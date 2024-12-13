@@ -1,27 +1,105 @@
 "use client";
 
 import { getMoviesAsync } from "@/store/slices/movieSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  TextField,
+} from "@mui/material";
+import { DataGrid, GridPaginationModel } from "@mui/x-data-grid";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const { movies } = useSelector((state: any) => state.movies);
-  console.log(movies);
+  const [searchTitle, setSearchTitle] = useState("Pokemon");
+  const [yearFilter, setYearFilter] = useState("");
+  const [typeFilter, setTypeFilter] = useState("");
+  const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
+    page: 0,
+    pageSize: 10,
+  });
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        dispatch(getMoviesAsync("batman"));
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    dispatch(
+      getMoviesAsync({ title: searchTitle, year: yearFilter, type: typeFilter })
+    );
+  }, [dispatch, searchTitle, yearFilter, typeFilter]);
 
-    fetchData();
-  }, [dispatch]);
+  const handleRowClick = (params: any) => {
+    router.push(`/movie-detail/${params.row.imdbID}`);
+  };
 
-  return <div className=""></div>;
+  const columns = [
+    { field: "title", headerName: "Name", flex: 2 },
+    { field: "type", headerName: "Type", flex: 1 },
+    { field: "year", headerName: "Release Date", flex: 1 },
+    { field: "imdbID", headerName: "IMDb ID", flex: 1 },
+  ];
+
+  return (
+    <div className="p-20 w-full h-screen">
+      <div className="flex gap-6 mb-6">
+        <Box>
+          <InputLabel>Search by Name</InputLabel>
+          <TextField
+            variant="outlined"
+            value={searchTitle}
+            onChange={(e: any) => setSearchTitle(e.target.value)}
+          />
+        </Box>
+        <Box>
+          <InputLabel>Filter by Release Date</InputLabel>
+          <TextField
+            variant="outlined"
+            value={yearFilter}
+            onChange={(e: any) => setYearFilter(e.target.value)}
+          />
+        </Box>
+        <Box>
+          <InputLabel>Filter by Type</InputLabel>
+          <FormControl className="w-48">
+            <Select
+              value={typeFilter}
+              onChange={(e: any) => setTypeFilter(e.target.value)}
+            >
+              <MenuItem value="">All</MenuItem>
+              <MenuItem value="movie">Movies</MenuItem>
+              <MenuItem value="series">TV Series</MenuItem>
+              <MenuItem value="episode">TV Series Episodes</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+      </div>
+
+      <Paper sx={{ height: 400, width: "100%" }}>
+        <DataGrid
+          rows={movies.map((movie: any, index: number) => ({
+            id: index,
+            title: movie.Title,
+            type: movie.Type,
+            year: movie.Year,
+            imdbID: movie.imdbID,
+          }))}
+          columns={columns}
+          onRowClick={handleRowClick}
+          pagination
+          paginationModel={paginationModel}
+          onPaginationModelChange={(model: GridPaginationModel) =>
+            setPaginationModel(model)
+          }
+          pageSizeOptions={[10, 20, 50]}
+        />
+      </Paper>
+    </div>
+  );
 };
 
 export default Home;
