@@ -19,3 +19,9 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@layer components {
+  .detail-page {
+    @apply flex justify-center items-center min-h-screen;
+  }
+}
