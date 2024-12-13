@@ -40,12 +40,12 @@ const MovieDetail = () => {
       value: `${movieDetail.imdbRating} (${movieDetail.imdbVotes} votes)`,
     },
     { label: "Awards", value: movieDetail.Awards },
-    { label: "BoxOffice", value: movieDetail.BoxOffice },
+    { label: "Box Office", value: movieDetail.BoxOffice },
   ];
 
   return (
-    <Box className="detail-page bg-gray-100">
-      <Paper className="flex shadow-2xl rounded-2xl w-3/4 max-w-5xl p-6 gap-6">
+    <Box className="detail-page">
+      <Paper className="detail-paper">
         <div className="w-1/3">
           <img
             src={movieDetail.Poster}

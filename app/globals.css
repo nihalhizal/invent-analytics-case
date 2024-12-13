@@ -21,7 +21,19 @@ body {
 }
 
 @layer components {
+  .main-page {
+    @apply flex flex-col w-full h-screen px-20 bg-neutral-300 gap-6;
+  }
   .detail-page {
-    @apply flex justify-center items-center min-h-screen;
+    @apply flex justify-center items-center min-h-screen bg-neutral-300;
+  }
+  .filter-paper {
+    @apply flex shadow-sm rounded-xl w-full h-1/6 p-6 gap-6 mt-10;
+  }
+  .grid-paper {
+    @apply shadow-sm rounded-xl w-full h-4/6 p-6;
+  }
+  .detail-paper {
+    @apply flex shadow-2xl rounded-2xl w-3/4 max-w-5xl p-6 gap-6;
   }
 }

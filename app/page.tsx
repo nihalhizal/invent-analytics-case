@@ -18,7 +18,7 @@ import { DataGrid, GridPaginationModel } from "@mui/x-data-grid";
 const Home = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { movies } = useSelector((state: any) => state.movies);
+  const { movies, loading } = useSelector((state: any) => state.movies);
   const [searchTitle, setSearchTitle] = useState("Pokemon");
   const [yearFilter, setYearFilter] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
@@ -45,8 +45,8 @@ const Home = () => {
   ];
 
   return (
-    <div className="p-20 w-full h-screen">
-      <div className="flex gap-6 mb-6">
+    <div className="main-page">
+      <Paper className="filter-paper">
         <Box>
           <InputLabel>Search by Name</InputLabel>
           <TextField
@@ -77,9 +77,9 @@ const Home = () => {
             </Select>
           </FormControl>
         </Box>
-      </div>
+      </Paper>
 
-      <Paper sx={{ height: 400, width: "100%" }}>
+      <Paper className="grid-paper">
         <DataGrid
           rows={movies.map((movie: any, index: number) => ({
             id: index,
@@ -96,6 +96,7 @@ const Home = () => {
             setPaginationModel(model)
           }
           pageSizeOptions={[10, 20, 50]}
+          loading={loading}
         />
       </Paper>
     </div>
