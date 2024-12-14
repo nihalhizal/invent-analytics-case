@@ -9,6 +9,7 @@ import {
   Paper,
   Select,
   TextField,
+  Typography,
 } from "@mui/material";
 import {
   setSearchTitle,
@@ -54,6 +55,11 @@ const HeaderFilters = () => {
           </Select>
         </FormControl>
       </Box>
+      {searchTitle?.length < 3 && (
+        <Typography color="error" variant="body2" sx={{ marginTop: 2 }}>
+          * Too many results. Please enter at least 3 characters.
+        </Typography>
+      )}
     </Paper>
   );
 };
