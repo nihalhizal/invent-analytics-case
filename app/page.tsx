@@ -46,7 +46,7 @@ const Home = () => {
 
   return (
     <div className="main-page">
-      <Paper className="filter-paper">
+      <Paper elevation={0} className="filter-paper">
         <Box>
           <InputLabel>Search by Name</InputLabel>
           <TextField
@@ -79,9 +79,9 @@ const Home = () => {
         </Box>
       </Paper>
 
-      <Paper className="grid-paper">
+      <Paper elevation={0} className="grid-paper">
         <DataGrid
-          rows={movies.map((movie: any, index: number) => ({
+          rows={movies?.map((movie: any, index: number) => ({
             id: index,
             title: movie.Title,
             type: movie.Type,

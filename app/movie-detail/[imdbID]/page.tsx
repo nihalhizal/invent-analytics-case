@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "next/navigation";
 import { getMovieDetailAsync } from "@/store/slices/movieSlice";
-import { Paper, Box, Typography, Grid } from "@mui/material";
+import { Paper, Box, Typography } from "@mui/material";
 
 const MovieDetail = () => {
   const dispatch = useDispatch();
