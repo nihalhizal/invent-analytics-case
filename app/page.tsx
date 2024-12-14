@@ -1,7 +1,7 @@
 "use client";
 
 import { getMoviesAsync } from "@/store/slices/movieSlice";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import {
@@ -14,18 +14,20 @@ import {
   TextField,
 } from "@mui/material";
 import { DataGrid, GridPaginationModel } from "@mui/x-data-grid";
+import {
+  setSearchTitle,
+  setYearFilter,
+  setTypeFilter,
+  setPaginationModel,
+} from "@/store/slices/filterSlice";
 
 const Home = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { movies, loading } = useSelector((state: any) => state.movies);
-  const [searchTitle, setSearchTitle] = useState("Pokemon");
-  const [yearFilter, setYearFilter] = useState("");
-  const [typeFilter, setTypeFilter] = useState("");
-  const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
-    page: 0,
-    pageSize: 10,
-  });
+  const { searchTitle, yearFilter, typeFilter, paginationModel } = useSelector(
+    (state: any) => state.filters
+  );
 
   useEffect(() => {
     dispatch(
@@ -52,7 +54,7 @@ const Home = () => {
           <TextField
             variant="outlined"
             value={searchTitle}
-            onChange={(e: any) => setSearchTitle(e.target.value)}
+            onChange={(e: any) => dispatch(setSearchTitle(e.target.value))}
           />
         </Box>
         <Box>
@@ -60,7 +62,7 @@ const Home = () => {
           <TextField
             variant="outlined"
             value={yearFilter}
-            onChange={(e: any) => setYearFilter(e.target.value)}
+            onChange={(e: any) => dispatch(setYearFilter(e.target.value))}
           />
         </Box>
         <Box>
@@ -68,7 +70,7 @@ const Home = () => {
           <FormControl className="w-48">
             <Select
               value={typeFilter}
-              onChange={(e: any) => setTypeFilter(e.target.value)}
+              onChange={(e: any) => dispatch(setTypeFilter(e.target.value))}
             >
               <MenuItem value="">All</MenuItem>
               <MenuItem value="movie">Movies</MenuItem>
@@ -93,7 +95,7 @@ const Home = () => {
           pagination
           paginationModel={paginationModel}
           onPaginationModelChange={(model: GridPaginationModel) =>
-            setPaginationModel(model)
+            dispatch(setPaginationModel(model))
           }
           pageSizeOptions={[10, 20, 50]}
           loading={loading}
