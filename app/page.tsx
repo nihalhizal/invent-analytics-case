@@ -2,20 +2,19 @@
 
 import { getMoviesAsync } from "@/store/slices/movieSlice";
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { Paper } from "@mui/material";
 import { DataGrid, GridPaginationModel } from "@mui/x-data-grid";
 import { setPaginationModel } from "@/store/slices/filterSlice";
 import HeaderFilters from "@/components/HeaderFilters";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 const Home = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const router = useRouter();
-  const { movies, loading } = useSelector((state: any) => state.movies);
-  const { searchTitle, yearFilter, typeFilter, paginationModel } = useSelector(
-    (state: any) => state.filters
-  );
+  const { movies, loading } = useAppSelector((state: any) => state.movies);
+  const { searchTitle, yearFilter, typeFilter, paginationModel } =
+    useAppSelector((state: any) => state.filters);
 
   useEffect(() => {
     dispatch(

@@ -1,6 +1,6 @@
 "use client";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   Box,
   FormControl,
@@ -17,8 +17,8 @@ import {
 } from "@/store/slices/filterSlice";
 
 const HeaderFilters = () => {
-  const dispatch = useDispatch();
-  const { searchTitle, yearFilter, typeFilter } = useSelector(
+  const dispatch = useAppDispatch();
+  const { searchTitle, yearFilter, typeFilter } = useAppSelector(
     (state: any) => state.filters
   );
 

@@ -1,21 +1,21 @@
 "use client";
 
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useParams } from "next/navigation";
 import { getMovieDetailAsync } from "@/store/slices/movieSlice";
 import { Paper, Box, Typography } from "@mui/material";
 
 const MovieDetail = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { imdbID } = useParams();
-  const { movieDetail, loading, error } = useSelector(
+  const { movieDetail, loading, error } = useAppSelector(
     (state: any) => state.movies
   );
 
   useEffect(() => {
     if (imdbID) {
-      dispatch(getMovieDetailAsync(imdbID));
+      dispatch(getMovieDetailAsync(imdbID as string));
     }
   }, [dispatch, imdbID]);
 
